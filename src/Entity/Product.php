@@ -12,27 +12,27 @@ class Product
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getOrders"])]
+    #[Groups(["getOrders", "getCats"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["getOrders"])]
+    #[Groups(["getOrders", "getCats"])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["getOrders"])]
+    #[Groups(["getOrders", "getCats"])]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["getOrders"])]
+    #[Groups(["getOrders", "getCats"])]
     private ?string $image = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["getOrders"])]
+    #[Groups(["getOrders", "getCats"])]
     private ?string $quantity = null;
 
     #[ORM\Column]
-    #[Groups(["getOrders"])]
+    #[Groups(["getOrders", ])]
     private ?int $price = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
@@ -41,6 +41,7 @@ class Product
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["getCats"])]
     private ?Cat $cat = null;
 
     public function getId(): ?int
