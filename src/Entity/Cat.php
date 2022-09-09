@@ -18,6 +18,7 @@ class Cat
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["getCats"])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'cat', targetEntity: Product::class)]

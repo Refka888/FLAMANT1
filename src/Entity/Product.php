@@ -32,11 +32,11 @@ class Product
     private ?string $quantity = null;
 
     #[ORM\Column]
-    #[Groups(["getOrders", ])]
+    #[Groups(["getOrders", "getCats"])]
     private ?int $price = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
-    #[Groups(["getOrders"])]
+    #[Groups(["getOrders", "getCats"])]
     private ?Order $orders = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]

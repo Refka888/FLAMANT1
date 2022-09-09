@@ -18,6 +18,7 @@ class CatController extends AbstractController
         $catList = $catRepository->findAll();
         $jsonCatList = $serializer->serialize($catList, 'json',['groups' => 'getCats']);
         return new JsonResponse($jsonCatList, Response::HTTP_OK, [], true);
+        
     }
     #[Route('/api/cats/{id}', name: 'detailCats', methods: ['GET'])]
     public function getDetailCat(Cat $cat, SerializerInterface $serializer): JsonResponse 
