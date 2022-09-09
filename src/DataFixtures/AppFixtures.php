@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Cat;
 use App\Entity\User;
 use App\Entity\Order;
 use App\Entity\Product;
@@ -24,14 +25,21 @@ class AppFixtures extends Fixture
             $listUser[] = $user;
          }
         $listOrder = [];
+        $listStatut = ["valid", "in progress", "canceled"];
          for ($i=0; $i < 20; $i++){
              $order = new Order();
              $order ->setCode("123456". $i);
-             $order ->setStatut("Statut". $i);
+             $order ->setStatut($listStatut[array_rand($listStatut)]);
              $order ->setUsers($listUser[array_rand($listUser)]);
              $manager ->persist($order);
              $listOrder[] = $order;
-             //test
+         }
+         $listCat = [];
+         for ($i=0; $i < 20; $i++){
+            $cat = new Cat();
+            $cat ->setName("Category". $i);
+            $manager ->persist($cat);
+            $listCat[] = $cat;
          }
       $listQuantity = [10, 20, 100, 150, 250, 300, 320, 350];
          for ($i=0; $i < 20; $i++){
@@ -42,6 +50,7 @@ class AppFixtures extends Fixture
             $product ->setQuantity($listQuantity[array_rand($listQuantity)]);
             $product ->setPrice($listQuantity[array_rand($listQuantity)]);
             $product ->setOrders($listOrder[array_rand($listOrder)]);
+            $product ->setCat($listCat[array_rand($listCat)]);
             $manager ->persist($product);
 
         }

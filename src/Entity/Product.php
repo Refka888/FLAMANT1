@@ -39,6 +39,10 @@ class Product
     #[Groups(["getOrders"])]
     private ?Order $orders = null;
 
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Cat $cat = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -112,6 +116,18 @@ class Product
     public function setOrders(?Order $orders): self
     {
         $this->orders = $orders;
+
+        return $this;
+    }
+
+    public function getCat(): ?Cat
+    {
+        return $this->cat;
+    }
+
+    public function setCat(?Cat $cat): self
+    {
+        $this->cat = $cat;
 
         return $this;
     }

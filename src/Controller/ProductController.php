@@ -2,18 +2,28 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Entity\Product;
+use App\Repository\ProductRepository;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProductController extends AbstractController
 {
-    #[Route('/product', name: 'app_product')]
-    public function index(): JsonResponse
+  
+    #[Route('/api/products', name: 'product', methods: ['GET'])]
+    public function getOrderList(ProductRepository $productRepository, SerializerInterface $serializer): JsonResponse
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/ProductController.php',
-        ]);
+        $productList = $productRepository->findAll();
+        $jsonProductList = $serializer->serialize($productList, 'json',['groups' => 'getOrders']);
+        return new JsonResponse($jsonProductList, Response::HTTP_OK, [], true);
+    }
+    #[Route('/api/products/{id}', name: 'detailProduct', methods: ['GET'])]
+    public function getDetailProduct(Product $product, SerializerInterface $serializer): JsonResponse 
+    {
+        $jsonProduct = $serializer->serialize($product, 'json', ['groups' => 'getOrders']);
+        return new JsonResponse($jsonProduct, Response::HTTP_OK, ['accept' => 'json'], true);
     }
 }
