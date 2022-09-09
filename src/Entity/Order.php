@@ -16,18 +16,15 @@ class Order
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getUsers"])]
-    #[Groups(["getOrders"])]
+    #[Groups(["getUsers","getOrders"])]
     private ?int $id = null;
 
     #[ORM\Column]
-    #[Groups(["getUsers"])]
-    #[Groups(["getOrders"])]
+    #[Groups(["getUsers", "getOrders"])]
     private ?int $code = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["getUsers"])]
-    #[Groups(["getOrders"])]
+    #[Groups(["getUsers", "getOrders"])]
     private ?string $statut = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
