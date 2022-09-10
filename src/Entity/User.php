@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\Timer;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
@@ -10,8 +11,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[ORM\HasLifecycleCallbacks]
+
 class User
 {
+    use Timer;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -39,7 +43,6 @@ class User
     private ?string $password = null;
 
     #[ORM\OneToMany(mappedBy: 'users', targetEntity: Order::class)]
-    //#[Groups(["getUsers"])]
     private Collection $orders;
 
     public function __construct()
@@ -141,4 +144,5 @@ class User
 
         return $this;
     }
+
 }

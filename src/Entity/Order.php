@@ -2,17 +2,21 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Traits\Timer;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\OrderRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
+#[ORM\HasLifecycleCallbacks]
+
 class Order
 {
+    use Timer;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -33,6 +37,8 @@ class Order
 
     #[ORM\OneToMany(mappedBy: 'orders', targetEntity: Product::class)]
     private Collection $products;
+
+    
 
     public function __construct()
     {
@@ -109,4 +115,6 @@ class Order
 
         return $this;
     }
+
+   
 }

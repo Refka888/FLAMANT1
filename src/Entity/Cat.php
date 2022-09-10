@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\Timer;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CatRepository;
 use Doctrine\Common\Collections\Collection;
@@ -9,8 +10,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CatRepository::class)]
+#[ORM\HasLifecycleCallbacks]
+
 class Cat
 {
+    use Timer;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -23,6 +27,8 @@ class Cat
 
     #[ORM\OneToMany(mappedBy: 'cat', targetEntity: Product::class)]
     private Collection $products;
+
+   
 
     public function __construct()
     {
@@ -75,4 +81,6 @@ class Cat
 
         return $this;
     }
+
+   
 }

@@ -2,13 +2,17 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\Timer;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ProductRepository;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
+#[ORM\HasLifecycleCallbacks]
+
 class Product
 {
+    use Timer;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -43,6 +47,8 @@ class Product
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(["getCats"])]
     private ?Cat $cat = null;
+
+    
 
     public function getId(): ?int
     {
@@ -132,4 +138,5 @@ class Product
 
         return $this;
     }
+
 }
