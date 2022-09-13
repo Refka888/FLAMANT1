@@ -6,13 +6,34 @@ use App\Entity\Cat;
 use App\Entity\User;
 use App\Entity\Order;
 use App\Entity\Product;
+use App\Entity\UserAuth;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    private $userPasswordHasher;
+    
+    public function __construct(UserPasswordHasherInterface $userPasswordHasher)
+    {
+        $this->userPasswordHasher = $userPasswordHasher;
+    }
     public function load(ObjectManager $manager): void
     {
+         // Création d'un user "normal"
+         $userAuth = new UserAuth();
+         $userAuth->setEmail("user@venteapi.com");
+         $userAuth->setRoles(["ROLE_USER"]);
+         $userAuth->setPassword($this->userPasswordHasher->hashPassword($userAuth, "password"));
+         $manager->persist($userAuth);
+         
+         // Création d'un user admin
+         $userAdmin = new UserAuth();
+         $userAdmin->setEmail("admin@venteapi.com");
+         $userAdmin->setRoles(["ROLE_ADMIN"]);
+         $userAdmin->setPassword($this->userPasswordHasher->hashPassword($userAdmin, "password"));
+         $manager->persist($userAdmin);
         $listUser = [];
         for ($i=0; $i < 20; $i++){
             $user = new User();
