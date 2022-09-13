@@ -25,14 +25,11 @@ class Cat
     #[Groups(["getCats"])]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'cat', targetEntity: Product::class)]
-    private Collection $products;
-
+  
    
 
     public function __construct()
     {
-        $this->products = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -52,35 +49,4 @@ class Cat
         return $this;
     }
 
-    /**
-     * @return Collection<int, Product>
-     */
-    public function getProducts(): Collection
-    {
-        return $this->products;
-    }
-
-    public function addProduct(Product $product): self
-    {
-        if (!$this->products->contains($product)) {
-            $this->products->add($product);
-            $product->setCat($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduct(Product $product): self
-    {
-        if ($this->products->removeElement($product)) {
-            // set the owning side to null (unless already changed)
-            if ($product->getCat() === $this) {
-                $product->setCat(null);
-            }
-        }
-
-        return $this;
-    }
-
-   
 }

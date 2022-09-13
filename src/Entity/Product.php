@@ -43,12 +43,12 @@ class Product
     #[Groups(["getOrders", "getCats"])]
     private ?Order $orders = null;
 
-    #[ORM\ManyToOne(inversedBy: 'products')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["getCats"])]
-    private ?Cat $cat = null;
 
-    
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Cat $Category = null;
+
+   
 
     public function getId(): ?int
     {
@@ -127,14 +127,16 @@ class Product
         return $this;
     }
 
-    public function getCat(): ?Cat
+
+
+    public function getCategory(): ?Cat
     {
-        return $this->cat;
+        return $this->Category;
     }
 
-    public function setCat(?Cat $cat): self
+    public function setCategory(?Cat $Category): self
     {
-        $this->cat = $cat;
+        $this->Category = $Category;
 
         return $this;
     }

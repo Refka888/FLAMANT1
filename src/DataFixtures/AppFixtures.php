@@ -34,6 +34,8 @@ class AppFixtures extends Fixture
              $manager ->persist($order);
              $listOrder[] = $order;
          }
+
+         //Add Categories
          $listCat = [];
          for ($i=0; $i < 20; $i++){
             $cat = new Cat();
@@ -41,6 +43,8 @@ class AppFixtures extends Fixture
             $manager ->persist($cat);
             $listCat[] = $cat;
          }
+
+         //Add Products
       $listQuantity = [10, 20, 100, 150, 250, 300, 320, 350];
          for ($i=0; $i < 20; $i++){
             $product = new Product();
@@ -50,7 +54,7 @@ class AppFixtures extends Fixture
             $product ->setQuantity($listQuantity[array_rand($listQuantity)]);
             $product ->setPrice($listQuantity[array_rand($listQuantity)]);
             $product ->setOrders($listOrder[array_rand($listOrder)]);
-            $product ->setCat($listCat[array_rand($listCat)]);
+            $product ->setCategory($listCat[array_rand($listCat)]);
             $manager ->persist($product);
 
         }
